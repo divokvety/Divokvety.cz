@@ -35,7 +35,8 @@ a{color:inherit}
 .brand .tagline{width:min(250px,52vw);height:auto;margin:clamp(26px,4vw,42px) auto 0;opacity:.78}
 
 /* ---------- videopás ---------- */
-.stripe{position:relative;overflow:hidden;background:#150806;height:clamp(230px,32vw,400px)}
+.stripe{position:relative;overflow:hidden;background:#150806;height:clamp(240px,56vw,400px)}
+@media (min-width:700px){.stripe{height:clamp(260px,32vw,400px)}}
 .stripe video,.stripe img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .stripe img{display:none}
 @media (prefers-reduced-motion:reduce){.stripe video{display:none}.stripe img{display:block}}
@@ -87,6 +88,9 @@ footer .sig{width:clamp(104px,12vw,140px);height:auto;margin:0 auto;opacity:.78}
 }
 .social a:hover{border-color:var(--wine);transform:translateY(-2px)}
 .social svg{width:19px;height:19px;display:block}
+.tel{margin:20px 0 0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:.95rem;letter-spacing:.04em}
+.tel a{color:var(--wine);text-decoration:none;opacity:.85}
+.tel a:hover{opacity:1;text-decoration:underline}
 .copy{
   margin:26px 0 0;
   font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -154,14 +158,43 @@ footer .sig{width:clamp(104px,12vw,140px);height:auto;margin:0 auto;opacity:.78}
         <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
       </svg>
     </a></li>
+    <li><a href="tel:+420605280189" aria-label="Telefon +420 605 280 189">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+    </a></li>
     <li><a href="mailto:lenia.divokvety@gmail.com" aria-label="E-mail">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true">
         <rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3 7l9 6 9-6"/>
       </svg>
     </a></li>
   </ul>
+  <p class="tel"><a href="tel:+420605280189">+420 605 280 189</a></p>
   <p class="copy">© Lenia Wildflowers — Ostrava</p>
 </footer>
 
+<script>
+(function () {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var v = document.querySelector('.stripe video');
+  if (!v) return;
+  v.muted = true;
+  v.defaultMuted = true;
+  v.setAttribute('muted', '');
+  v.setAttribute('playsinline', '');
+  v.setAttribute('webkit-playsinline', '');
+  function go() {
+    if (!v.paused) return;
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+  go();
+  v.addEventListener('canplay', go);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) go(); });
+  ['touchstart', 'pointerdown', 'scroll'].forEach(function (e) {
+    window.addEventListener(e, go, { once: true, passive: true });
+  });
+})();
+</script>
 </body>
 </html>
